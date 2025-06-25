@@ -619,10 +619,7 @@ export default IframeApp;
 - Safari 12+
 - Edge 79+
 
-## 🤝 Contributing
-
-We welcome contributions! Please feel free to submit issues and pull requests.
-
+ 
 ## 📞 Support
 
 If you encounter any issues or have questions, please open an issue on our repository.

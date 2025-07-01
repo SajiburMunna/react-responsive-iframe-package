@@ -1,6 +1,19 @@
-# React Responsive Iframe
+# React Responsive Iframe - Auto-Resizing Iframe Component for React | Dynamic Height Adjustment
 
-A lightweight, TypeScript-ready React component and hook for automatically resizing iframes based on their content. Perfect for embedding responsive content that needs to adapt to its container.
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/SajiburMunna/react-responsive-iframe-package)
+[![npm version](https://img.shields.io/npm/v/react-responsive-iframe.svg)](https://www.npmjs.com/package/react-responsive-iframe)
+[![npm downloads](https://img.shields.io/npm/dm/react-responsive-iframe.svg)](https://www.npmjs.com/package/react-responsive-iframe)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+
+[View on GitHub](https://github.com/SajiburMunna/react-responsive-iframe-package)
+
+[![Live Demo](https://img.shields.io/badge/Live-Demo-green?style=for-the-badge)](https://react-responsive-iframe-package-1fe.vercel.app/)
+
+**[🚀 Try the Live Demo](https://react-responsive-iframe-package-1fe.vercel.app/)**
+
+A lightweight, TypeScript-ready React component and hook for automatically resizing iframes based on their content. Perfect for embedding responsive content that needs to adapt to its container. Solve iframe height issues, prevent content overflow, and create seamless user experiences.
+
+**Keywords:** React iframe, responsive iframe, auto-resize iframe, dynamic iframe height, iframe content detection, React iframe component, TypeScript iframe, iframe resizer, iframe height adjustment, cross-origin iframe
 
 ## ✨ Features
 
@@ -12,6 +25,36 @@ A lightweight, TypeScript-ready React component and hook for automatically resiz
 - ⚡ **Performance**: Event-based resizing (no continuous intervals)
 - 🎨 **Easy Integration**: Simple API that works with any React project
 - 🕒 **No Initial Height Jump**: Optionally hide the iframe until the correct height is calculated (see `hideUntilResized`)
+- 🔄 **Content Change Detection**: Automatically detects content addition and removal
+- 📊 **Multiple Calculation Methods**: Choose the best height calculation for your use case
+
+## 🎯 Use Cases
+
+This React responsive iframe package is perfect for:
+
+- **📄 Document Embedding**: Embed PDFs, Google Docs, or other documents that need dynamic sizing
+- **📊 Dashboard Widgets**: Create responsive dashboard components with embedded content
+- **📝 Form Embedding**: Embed external forms that change height based on content
+- **🎥 Video Players**: Embed video players that need responsive sizing
+- **📱 Mobile Applications**: Create mobile-friendly iframe experiences
+- **🌐 Cross-Origin Content**: Safely embed content from different domains
+- **📋 Content Management**: Embed dynamic content that changes frequently
+- **🎨 Portfolio Websites**: Showcase projects in responsive iframe containers
+- **📈 Analytics Dashboards**: Embed analytics tools with automatic resizing
+- **🔧 Developer Tools**: Create responsive developer tool interfaces
+
+## ⚡ Why Choose React Responsive Iframe?
+
+| Feature                | Traditional Iframe                | React Responsive Iframe             |
+| ---------------------- | --------------------------------- | ----------------------------------- |
+| **Height Management**  | ❌ Fixed height, content overflow | ✅ Automatic height adjustment      |
+| **Content Detection**  | ❌ No content change detection    | ✅ Detects content addition/removal |
+| **Performance**        | ❌ Continuous polling             | ✅ Event-based resizing             |
+| **User Experience**    | ❌ Scrollbars, layout shifts      | ✅ Smooth, seamless experience      |
+| **Responsive Design**  | ❌ Fixed dimensions               | ✅ Adapts to content and screen     |
+| **TypeScript Support** | ❌ No type safety                 | ✅ Full TypeScript definitions      |
+| **Security**           | ❌ Basic security                 | ✅ Origin checking and validation   |
+| **Integration**        | ❌ Manual implementation          | ✅ Simple React component API       |
 
 ## 📦 Installation
 
@@ -24,6 +67,20 @@ or
 ```bash
 yarn add react-responsive-iframe
 ```
+
+## 🎮 Live Demo
+
+**See it in action!** Visit our interactive demo to explore all features:
+
+**[🚀 Live Demo](https://react-responsive-iframe-package-1fe.vercel.app/)**
+
+The demo showcases:
+
+- ✅ **Before vs After** comparison with traditional iframes
+- ✅ **Content addition/removal** with automatic height adjustment
+- ✅ **Parent-child communication** examples
+- ✅ **Different calculation methods** for various use cases
+- ✅ **Performance optimizations** and responsive behavior
 
 ## 🚀 Quick Start
 
@@ -222,23 +279,32 @@ function AdvancedExample() {
 }
 ```
 
-### 2. Manual-Only Mode (No Auto-Resize)
+### 2. Manual Resize Control
 
 ```jsx
 import { ResponsiveIframe } from "react-responsive-iframe";
 import { useRef } from "react";
 
-function ManualResizeExample() {
+function ManualControlExample() {
   const iframeRef = useRef();
 
-  const handleManualResize = () => {
+  const handleAddContent = () => {
+    // Send message to iframe to add content
+    iframeRef.current?.sendMessage({
+      type: "addContent",
+      data: "New content added!",
+    });
+  };
+
+  const handleForceResize = () => {
+    // Force iframe to recalculate its size
     iframeRef.current?.resize();
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Manual Resize Example</h2>
-      <button onClick={handleManualResize}>Manual Resize</button>
+    <div>
+      <button onClick={handleAddContent}>Add Content</button>
+      <button onClick={handleForceResize}>Force Resize</button>
 
       <ResponsiveIframe
         ref={iframeRef}
@@ -246,7 +312,8 @@ function ManualResizeExample() {
         width="100%"
         height={300}
         responsiveOptions={{
-          autoResize: false, // Disable automatic resizing
+          autoResize: true,
+          tolerance: 1,
         }}
       />
     </div>
@@ -254,81 +321,43 @@ function ManualResizeExample() {
 }
 ```
 
-### 3. Communication Between Parent and Child
-
-**Parent Component:**
-
-```jsx
-import { ResponsiveIframe } from "react-responsive-iframe";
-import { useRef } from "react";
-
-function ParentComponent() {
-  const iframeRef = useRef();
-
-  const sendMessageToIframe = () => {
-    iframeRef.current?.sendMessage({
-      type: "customAction",
-      data: "Hello from parent!",
-    });
-  };
-
-  return (
-    <div style={{ padding: 20 }}>
-      <h2>Parent Component</h2>
-      <button onClick={sendMessageToIframe}>Send Message to Iframe</button>
-
-      <ResponsiveIframe
-        ref={iframeRef}
-        src="http://localhost:3001" // Your child app URL
-        width="100%"
-        height={400}
-        onMessage={(message) => {
-          if (message.type === "response") {
-            console.log("Response from iframe:", message.data);
-          }
-        }}
-      />
-    </div>
-  );
-}
-```
-
-**Child Component (Inside Iframe):**
+### 3. Dynamic Content with Auto-Resize
 
 ```jsx
 import { useIframeResizer } from "react-responsive-iframe";
 import { useState } from "react";
 
-function ChildComponent() {
-  const [content, setContent] = useState("Initial content...");
-
-  const { sendMessage, resize, isInitialized } = useIframeResizer({
+function DynamicContentExample() {
+  const [content, setContent] = useState("Initial content");
+  const { resize, isInitialized } = useIframeResizer({
     heightCalculationMethod: "bodyScroll",
     autoResize: true,
-    onParentMessage: (message) => {
-      if (message.type === "customAction") {
-        // Handle message from parent
-        sendMessage({
-          type: "response",
-          data: "Hello from child!",
-        });
-      }
-    },
   });
 
   const addContent = () => {
-    // Add content and trigger resize
-    setContent((prev) => prev + "\n\nMore content added!");
+    setContent(
+      (prev) =>
+        prev +
+        "\n\nAdditional content added at " +
+        new Date().toLocaleTimeString()
+    );
+    // Force resize after content change
+    setTimeout(() => resize(), 100);
+  };
+
+  const removeContent = () => {
+    setContent("Minimal content");
+    // Force resize after content removal
     setTimeout(() => resize(), 100);
   };
 
   return (
     <div style={{ padding: 20, fontFamily: "Arial" }}>
-      <h2>Child Component</h2>
+      <h2>Dynamic Content Example</h2>
       <p>Status: {isInitialized ? "✅ Connected" : "⏳ Connecting..."}</p>
 
       <button onClick={addContent}>Add Content</button>
-      <button onClick={() => resize(500, 400)}>Resize to 500x400</button>
+      <button onClick={removeContent}>Remove Content</button>
 
       <div style={{ background: "#f5f5f5", padding: 15, margin: "10px 0" }}>
         <pre style={{ whiteSpace: "pre-wrap" }}>{content}</pre>
@@ -563,25 +592,25 @@ export default IframeApp;
 
 ## 📏 Height Calculation Methods
 
-| Method                  | Description                                  | Use Case               |
-| ----------------------- | -------------------------------------------- | ---------------------- |
-| `bodyScroll`            | Uses `document.body.scrollHeight`            | Simple content         |
-| `bodyOffset`            | Uses `document.body.offsetHeight`            | Content with margins   |
-| `documentElementScroll` | Uses `document.documentElement.scrollHeight` | Full page content      |
-| `documentElementOffset` | Uses `document.documentElement.offsetHeight` | Full page with margins |
-| `max`                   | Uses maximum of all methods                  | Complex layouts        |
-| `min`                   | Uses minimum of all methods                  | Conservative sizing    |
-| `grow`                  | Only increases height, never decreases       | Growing content        |
-| `lowestElement`         | Finds the lowest element on page             | Dynamic content        |
+| Method                | Description                                | Use Case               |
+| --------------------- | ------------------------------------------ | ---------------------- |
+| bodyScroll            | Uses document.body.scrollHeight            | Simple content         |
+| bodyOffset            | Uses document.body.offsetHeight            | Content with margins   |
+| documentElementScroll | Uses document.documentElement.scrollHeight | Full page content      |
+| documentElementOffset | Uses document.documentElement.offsetHeight | Full page with margins |
+| max                   | Uses maximum of all methods                | Complex layouts        |
+| min                   | Uses minimum of all methods                | Conservative sizing    |
+| grow                  | Only increases height, never decreases     | Growing content        |
+| lowestElement         | Finds the lowest element on page           | Dynamic content        |
 
 ## 📐 Width Calculation Methods
 
-| Method        | Description                                 | Use Case              |
-| ------------- | ------------------------------------------- | --------------------- |
-| `scrollWidth` | Uses `document.documentElement.scrollWidth` | Full content width    |
-| `offsetWidth` | Uses `document.documentElement.offsetWidth` | Visible content width |
-| `max`         | Uses maximum of both methods                | Wide content          |
-| `min`         | Uses minimum of both methods                | Narrow content        |
+| Method      | Description                               | Use Case              |
+| ----------- | ----------------------------------------- | --------------------- |
+| scrollWidth | Uses document.documentElement.scrollWidth | Full content width    |
+| offsetWidth | Uses document.documentElement.offsetWidth | Visible content width |
+| max         | Uses maximum of both methods              | Wide content          |
+| min         | Uses minimum of both methods              | Narrow content        |
 
 ## 🔧 Performance Tips
 
@@ -619,10 +648,9 @@ export default IframeApp;
 - Safari 12+
 - Edge 79+
 
- 
 ## 📞 Support
 
-If you encounter any issues or have questions, please open an issue on our repository.
+If you encounter any issues or have questions, please open an issue on our [GitHub repository](https://github.com/SajiburMunna/react-responsive-iframe-package).
 
 ---
 

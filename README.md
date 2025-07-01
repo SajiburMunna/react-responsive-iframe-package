@@ -1,11 +1,8 @@
 # React Responsive Iframe - Auto-Resizing Iframe Component for React | Dynamic Height Adjustment
 
-[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/SajiburMunna/react-responsive-iframe-package)
 [![npm version](https://img.shields.io/npm/v/react-responsive-iframe.svg)](https://www.npmjs.com/package/react-responsive-iframe)
 [![npm downloads](https://img.shields.io/npm/dm/react-responsive-iframe.svg)](https://www.npmjs.com/package/react-responsive-iframe)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
-
-[View on GitHub](https://github.com/SajiburMunna/react-responsive-iframe-package)
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-green?style=for-the-badge)](https://react-responsive-iframe-package-1fe.vercel.app/)
 
@@ -650,7 +647,7 @@ export default IframeApp;
 
 ## 📞 Support
 
-If you encounter any issues or have questions, please open an issue on our [GitHub repository](https://github.com/SajiburMunna/react-responsive-iframe-package).
+If you encounter any issues or have questions, please open an issue on this repo.
 
 ---
 
